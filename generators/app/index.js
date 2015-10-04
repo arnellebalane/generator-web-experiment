@@ -1,4 +1,5 @@
 var generators = require('yeoman-generator');
+var _ = require('lodash');
 
 
 module.exports = generators.Base.extend({
@@ -13,6 +14,9 @@ module.exports = generators.Base.extend({
                     return input.trim()
                         ? true
                         : 'Please provide a name for this web experiment';
+                },
+                filter: function(input) {
+                    return _.kebabCase(input);
                 }
             }
         ];
@@ -23,27 +27,28 @@ module.exports = generators.Base.extend({
     },
 
     writing: function() {
-        var directories = [
-            'src/static/stylesheets',
-            'src/static/javascripts',
-            'src/static/images',
-            'src/static/fonts'
-        ];
-        directories.forEach(function(directory) {
-            this.mkdir(directory);
-        }.bind(this));
-
+        var answers = this.option().answers;
         var files = [
-            '.gitignore',
             'gulpfile.babel.js',
             'src/index.jade',
-            'src/static/stylesheets/application.styl',
-            'src/static/javascripts/application.js'
+            'license',
+            'package.json',
+            { src: 'gitignore', dest: '.gitignore' },
+            {
+                src: 'src/static/stylesheets/application.styl',
+                dest: 'src/static/stylesheets/' + answers.name + '.styl'
+            },
+            {
+                src: 'src/static/javascripts/application.js',
+                dest: 'src/static/javascripts/' + answers.name + '.js'
+            }
         ];
         files.forEach(function(file) {
-            var template = this.templatePath(file + '.template');
-            var target = this.destinationPath(file.replace(/\.template$/, ''));
-            this.template(template, target);
+            var template = this.templatePath(typeof file === 'string'
+                ? file : file.src);
+            var target = this.destinationPath(typeof file === 'string'
+                ? file : file.dest);
+            this.fs.copyTpl(template, target, answers);
         }.bind(this));
     },
 

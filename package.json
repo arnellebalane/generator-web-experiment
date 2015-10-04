@@ -6,6 +6,7 @@
   "author": "Arnelle Balane <arnellebalane@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "lodash": "^3.10.1",
     "yeoman-generator": "^0.20.3"
   }
 }

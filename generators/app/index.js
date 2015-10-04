@@ -27,7 +27,6 @@ module.exports = generators.Base.extend({
     },
 
     writing: function() {
-        var answers = this.option().answers;
         var files = [
             'gulpfile.babel.js',
             'src/index.jade',
@@ -36,11 +35,11 @@ module.exports = generators.Base.extend({
             { src: 'gitignore', dest: '.gitignore' },
             {
                 src: 'src/static/stylesheets/application.styl',
-                dest: 'src/static/stylesheets/' + answers.name + '.styl'
+                dest: 'src/static/stylesheets/' + this.answers.name + '.styl'
             },
             {
                 src: 'src/static/javascripts/application.js',
-                dest: 'src/static/javascripts/' + answers.name + '.js'
+                dest: 'src/static/javascripts/' + this.answers.name + '.js'
             }
         ];
         files.forEach(function(file) {
@@ -48,7 +47,7 @@ module.exports = generators.Base.extend({
                 ? file : file.src);
             var target = this.destinationPath(typeof file === 'string'
                 ? file : file.dest);
-            this.fs.copyTpl(template, target, answers);
+            this.fs.copyTpl(template, target, this.answers);
         }.bind(this));
     },
 

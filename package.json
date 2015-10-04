@@ -1,6 +1,6 @@
 {
   "name": "generator-web-experiment",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "yeoman generator to scaffold web experiments",
   "files": [],
   "author": "Arnelle Balane <arnellebalane@gmail.com>",

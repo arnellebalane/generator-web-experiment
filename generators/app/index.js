@@ -18,6 +18,23 @@ module.exports = generators.Base.extend({
                 filter: function(input) {
                     return _.kebabCase(input);
                 }
+            },
+            {
+                type: 'input',
+                name: 'description',
+                message: 'Please provide description for this web experiment:'
+            },
+            {
+                type: 'input',
+                name: 'username',
+                message: 'What is your name (to be used in project files)?',
+                store: true
+            },
+            {
+                type: 'input',
+                name: 'email',
+                message: 'What is your email (to be used in project files)?',
+                store: true
             }
         ];
         this.prompt(questions, function(answers) {
@@ -42,6 +59,8 @@ module.exports = generators.Base.extend({
                 dest: 'src/static/javascripts/' + this.answers.name + '.js'
             }
         ];
+
+        this.answers.currentYear = (new Date()).getFullYear();
         files.forEach(function(file) {
             var template = this.templatePath(typeof file === 'string'
                 ? file : file.src);

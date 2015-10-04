@@ -1,5 +1,5 @@
 {
-  "name": "generator-webexperiment",
+  "name": "generator-web-experiment",
   "version": "0.0.0",
   "description": "yeoman generator to scaffold web experiments",
   "files": [],

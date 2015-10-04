@@ -8,6 +8,7 @@ import babel from 'gulp-babel';
 
 gulp.task('templates', () => {
     return gulp.src('src/**/*.jade', { base: 'src' })
+        .pipe(plumber())
         .pipe(jade({ pretty: '    ' }))
         .pipe(gulp.dest('build'));
 });
@@ -15,6 +16,7 @@ gulp.task('templates', () => {
 
 gulp.task('stylesheets', () => {
     return gulp.src('src/**/*.styl', { base: 'src' })
+        .pipe(plumber())
         .pipe(stylus())
         .pipe(autoprefixer({ browsers: ['last 2 versions'] }))
         .pipe(gulp.dest('build'));
@@ -23,6 +25,7 @@ gulp.task('stylesheets', () => {
 
 gulp.task('javascripts', () => {
     return gulp.src('src/**/*.js', { base: 'src' })
+        .pipe(plumber())
         .pipe(babel())
         .pipe(gulp.dest('build'));
 });

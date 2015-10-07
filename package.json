@@ -1,12 +1,16 @@
 {
   "name": "generator-web-experiment",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "yeoman generator to scaffold web experiments",
   "keywords": [
-    "yeoman-generator"
+    "yeoman-generator",
+    "web experiment"
   ],
-  "files": [],
+  "files": [
+    "generators"
+  ],
   "author": "Arnelle Balane <arnellebalane@gmail.com>",
+  "repository": "arnellebalane/generator-web-experiment",
   "license": "MIT",
   "dependencies": {
     "lodash": "^3.10.1",

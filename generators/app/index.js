@@ -7,7 +7,6 @@ module.exports = generators.Base.extend({
         var done = this.async();
         var questions = [
             {
-                type: 'input',
                 name: 'name',
                 message: 'What is the name of this web experiment?',
                 validate: function(input) {
@@ -20,24 +19,41 @@ module.exports = generators.Base.extend({
                 }
             },
             {
-                type: 'input',
                 name: 'description',
                 message: 'Please provide description for this web experiment:'
             },
             {
-                type: 'input',
+                type: 'list',
+                name: 'markup',
+                message: 'What do you want to use for your markup?',
+                choices: ['jade', 'html'],
+                default: 'html'
+            },
+            {
+                type: 'list',
+                name: 'styles',
+                message: 'What do you want to use for your styles?',
+                choices: ['less', 'sass', 'stylus', 'css'],
+                default: 'css'
+            },
+            {
+                name: 'es6',
+                message: 'Will you be using ES6 features (Y/n)?',
+                default: 'Y'
+            },
+            {
                 name: 'username',
                 message: 'What is your name (to be used in project files)?',
                 store: true
             },
             {
-                type: 'input',
                 name: 'email',
                 message: 'What is your email (to be used in project files)?',
                 store: true
             }
         ];
         this.prompt(questions, function(answers) {
+            answers.es6 = answers.es6 === 'Y';
             this.answers = answers;
             done();
         }.bind(this));

@@ -70,14 +70,20 @@ module.exports = generators.Base.extend({
     },
 
     writing: function() {
+        var styleExtension = this.answers.styles;
+        if (this.answers.styles === 'stylus') {
+            styleExtension = 'styl';
+        }
+
         var files = [
             'gulpfile.babel.js',
             'src/index.jade',
             'license',
             'package.json',
             {
-                src: 'src/static/stylesheets/application.styl',
-                dest: 'src/static/stylesheets/' + this.answers.name + '.styl'
+                src: 'src/static/stylesheets/application.' + styleExtension,
+                dest: 'src/static/stylesheets/' + this.answers.name + '.'
+                    + styleExtension
             },
             {
                 src: 'src/static/javascripts/application.js',
@@ -124,7 +130,7 @@ module.exports = generators.Base.extend({
     },
 
     end: function() {
-        var instructions = [];
+        var instructions = [''];
         if (this.answers.styles !== 'css') {
             instructions.push('To compile your ' + this.answers.styles
                 + ' files to CSS, run ' + chalk.yellow.bold('gulp build'));

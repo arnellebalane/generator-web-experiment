@@ -66,6 +66,8 @@ module.exports = generators.Base.extend({
             'license',
             'package.json',
             { src: 'gitignore', dest: '.gitignore' },
+            { src: 'jshintrc', dest: '.jshintrc' },
+            { src: 'jscsrc', dest: '.jscsrc' },
             {
                 src: 'src/static/stylesheets/application.styl',
                 dest: 'src/static/stylesheets/' + this.answers.name + '.styl'

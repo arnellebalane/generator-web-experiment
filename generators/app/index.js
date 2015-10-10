@@ -90,13 +90,17 @@ module.exports = generators.Base.extend({
         var npmDependencies = [
             'gulp',
             'gulp-plumber',
-            'gulp-jade',
-            'gulp-stylus',
             'gulp-autoprefixer',
-            'babel',
-            'babel-core',
-            'gulp-babel'
         ];
+        if (this.answers.markup === 'jade') {
+            npmDependencies.push('gulp-jade');
+        }
+        if (this.answers.styles !== 'css') {
+            npmDependencies.push('gulp-' + this.answers.styles);
+        }
+        if (this.answers.es6) {
+            npmDependencies.push('babel', 'babel-core', 'gulp-babel');
+        }
         this.npmInstall(npmDependencies, { saveDev: true });
 
         var bowerDependencies = [

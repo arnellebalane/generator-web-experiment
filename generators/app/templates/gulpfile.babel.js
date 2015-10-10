@@ -14,6 +14,7 @@ import autoprefixer from 'gulp-autoprefixer';
 <% if (es6) { -%>
 import babel from 'gulp-babel';
 <% } -%>
+var browserSync = require('browser-sync').create();
 
 
 gulp.task('templates', () => {
@@ -68,13 +69,20 @@ gulp.task('copy', () => {
 });
 
 
+gulp.task('serve', ['watch'], () => {
+    browserSync.init({
+        server: { baseDir: './dist/' }
+    });
+});
+
+
 gulp.task('build', ['templates', 'stylesheets', 'javascripts', 'copy']);
 
 
 gulp.task('watch', () => {
-    gulp.watch('src/**/*.jade', ['templates']);
-    gulp.watch('src/**/*.styl', ['stylesheets']);
-    gulp.watch('src/**/*.js', ['javascripts']);
+    gulp.watch('src/**/*.jade', ['templates'], browserSync.reload);
+    gulp.watch('src/**/*.styl', ['stylesheets'], browserSync.reload);
+    gulp.watch('src/**/*.js', ['javascripts'], browserSync.reload);
 });
 
 

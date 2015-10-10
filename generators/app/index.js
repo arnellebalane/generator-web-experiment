@@ -101,7 +101,8 @@ module.exports = generators.Base.extend({
             'gulp-plumber',
             'gulp-autoprefixer',
             'babel',
-            'babel-core'
+            'babel-core',
+            'browser-sync'
         ];
         if (this.answers.markup === 'jade') {
             npmDependencies.push('gulp-jade');

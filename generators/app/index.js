@@ -59,15 +59,21 @@ module.exports = generators.Base.extend({
         }.bind(this));
     },
 
+    configuring: function() {
+        var configFiles = ['gitignore', 'jshintrc', 'jscsrc'];
+        configFiles.forEach(function(file) {
+            var template = this.templatePath(file);
+            var target = this.destinationPath('.' + file);
+            this.fs.copyTpl(template, target, this.answers);
+        }.bind(this));
+    },
+
     writing: function() {
         var files = [
             'gulpfile.babel.js',
             'src/index.jade',
             'license',
             'package.json',
-            { src: 'gitignore', dest: '.gitignore' },
-            { src: 'jshintrc', dest: '.jshintrc' },
-            { src: 'jscsrc', dest: '.jscsrc' },
             {
                 src: 'src/static/stylesheets/application.styl',
                 dest: 'src/static/stylesheets/' + this.answers.name + '.styl'

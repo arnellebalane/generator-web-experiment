@@ -64,7 +64,7 @@ gulp.task('javascripts', () => {
 gulp.task('copy', () => {
     return gulp.src(['src/static/images/**/*', 'src/static/fonts/**/*'],
         { base: 'src' })
-        .pipe(gulp.dest('build'));
+        .pipe(gulp.dest('dist'));
 });
 
 

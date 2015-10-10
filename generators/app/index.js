@@ -1,5 +1,6 @@
 var generators = require('yeoman-generator');
 var _ = require('lodash');
+var chalk = require('chalk');
 
 
 module.exports = generators.Base.extend({
@@ -26,14 +27,14 @@ module.exports = generators.Base.extend({
                 type: 'list',
                 name: 'markup',
                 message: 'What do you want to use for your markup?',
-                choices: ['jade', 'html'],
+                choices: ['html', 'jade'],
                 default: 'html'
             },
             {
                 type: 'list',
                 name: 'styles',
                 message: 'What do you want to use for your styles?',
-                choices: ['less', 'sass', 'stylus', 'css'],
+                choices: ['css', 'less', 'sass', 'stylus'],
                 default: 'css'
             },
             {
@@ -119,5 +120,22 @@ module.exports = generators.Base.extend({
             'mustache'
         ];
         this.bowerInstall(bowerDependencies, { save: true });
+    },
+
+    end: function() {
+        var instructions = [];
+        if (this.answers.styles !== 'css') {
+            instructions.push('To compile your ' + this.answers.styles
+                + ' files to CSS, run ' + chalk.yellow.bold('gulp build'));
+        }
+        if (this.answers.es6) {
+            instructions.push('To compile your ES6 code to ES5, run '
+                + chalk.yellow.bold('gulp build'));
+        }
+        instructions.push('To watch for changes in your files, run '
+            + chalk.yellow.bold('gulp'));
+        instructions.push('To serve your web experiment, run '
+            + chalk.yellow.bold('gulp serve'));
+        this.log(instructions.join('\n'));
     }
 });

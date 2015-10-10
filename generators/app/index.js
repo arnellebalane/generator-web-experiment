@@ -93,6 +93,8 @@ module.exports = generators.Base.extend({
             'gulp',
             'gulp-plumber',
             'gulp-autoprefixer',
+            'babel',
+            'babel-core'
         ];
         if (this.answers.markup === 'jade') {
             npmDependencies.push('gulp-jade');
@@ -101,7 +103,7 @@ module.exports = generators.Base.extend({
             npmDependencies.push('gulp-' + this.answers.styles);
         }
         if (this.answers.es6) {
-            npmDependencies.push('babel', 'babel-core', 'gulp-babel');
+            npmDependencies.push('gulp-babel');
         }
         this.npmInstall(npmDependencies, { saveDev: true });
 

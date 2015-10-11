@@ -80,6 +80,7 @@ module.exports = generators.Base.extend({
             'src/index.jade',
             'license',
             'package.json',
+            'readme.md',
             {
                 src: 'src/static/stylesheets/application.' + styleExtension,
                 dest: 'src/static/stylesheets/' + this.answers.name + '.'

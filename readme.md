@@ -19,12 +19,8 @@ or just run `yo` and select `Web Experiment` from its list of generators.
 
 The project boilerplate generated with this generator uses the following packages:
 
-- `jade` for templating
-- `stylus` for css preprocessing
+- `jade` or `html` for templating
+- `stylus`, `sass`, or `less` for css preprocessing, or just use `css`
 - `babel` to transpile es2015 to es5-compatible javascript
 - `gulp` for running build tasks
-
-#### To Do
-
-- Add support for running a web server
-- Allow user to choose which packages to install, and setup gulp appropriately
+- `browser-sync` to serve project and for live-reloading

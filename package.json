@@ -1,6 +1,6 @@
 {
   "name": "generator-web-experiment",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "yeoman generator to scaffold web experiments",
   "keywords": [
     "yeoman-generator",

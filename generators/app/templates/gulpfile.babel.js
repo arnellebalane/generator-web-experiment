@@ -14,12 +14,11 @@ import autoprefixer from 'gulp-autoprefixer';
 <% if (es6) { -%>
 import babel from 'gulp-babel';
 <% } -%>
-var browserSync = require('browser-sync').create();
+import browserSync from 'browser-sync';
 
 
 gulp.task('templates', () => {
-    var source = 'src/**/*.<%= markup %>';
-    return gulp.src(source, { base: 'src' })
+    return gulp.src('src/**/*.<%= markup %>', { base: 'src' })
 <% if (markup === 'jade') { -%>
         .pipe(plumber())
         .pipe(jade({ pretty: '    ' }))
@@ -30,22 +29,23 @@ gulp.task('templates', () => {
 
 gulp.task('stylesheets', () => {
 <% if (styles === 'less') { -%>
-    var source = 'src/**/*.less';
-    var compiler = less();
+    return gulp.src('src/**/*.less', { base: 'src' })
 <% } else if (styles === 'sass') { -%>
-    var source = ['src/**/*.sass', 'src/**/*.scss'];
-    var compiler = sass({ outputStyle: 'expanded' })
-        .on('error', sass.logError);
+    return gulp.src(['src/**/*.sass', 'src/**/*.scss'], { base: 'src' })
 <% } else if (styles === 'stylus') { -%>
-    var source = 'src/**/*.styl';
-    var compiler = stylus();
+    return gulp.src('src/**/*.styl', { base: 'src' })
 <% } else { -%>
-    var source = 'src/**/*.css';
+    return gulp.src('src/**/*.css', { base: 'src' })
 <% } -%>
-    return gulp.src(source, { base: 'src' })
 <% if (styles !== 'css') { -%>
         .pipe(plumber())
-        .pipe(compiler)
+<% if (styles === 'less') { -%>
+        .pipe(less())
+<% } else if (styles === 'sass') { -%>
+        .pipe(sass().on('error', sass.logError))
+<% } else if (styles === 'stylus') { -%>
+        .pipe(stylus())
+<% } -%>
 <% } -%>
         .pipe(autoprefixer({ browsers: ['last 2 versions'] }))
         .pipe(gulp.dest('dist'));
@@ -69,20 +69,31 @@ gulp.task('copy', () => {
 });
 
 
-gulp.task('serve', ['watch'], () => {
+gulp.task('serve', ['build', 'watch'], () => {
     browserSync.init({
         server: { baseDir: './dist/' }
     });
 });
 
 
+gulp.task('templates-watch', ['templates'], browserSync.reload);
+gulp.task('stylesheets-watch', ['stylesheets'], browserSync.reload);
+gulp.task('javascripts-watch', ['javascripts'], browserSync.reload);
 gulp.task('build', ['templates', 'stylesheets', 'javascripts', 'copy']);
 
 
 gulp.task('watch', () => {
-    gulp.watch('src/**/*.jade', ['templates'], browserSync.reload);
-    gulp.watch('src/**/*.styl', ['stylesheets'], browserSync.reload);
-    gulp.watch('src/**/*.js', ['javascripts'], browserSync.reload);
+    gulp.watch('src/**/*.<%= markup %>', ['templates-watch']);
+<% if (styles === 'less') { -%>
+    gulp.watch('src/**/*.less', ['stylesheets-watch']);
+<% } else if (styles === 'sass') { -%>
+    gulp.watch('src/**/*.sass', ['stylesheets-watch']);
+<% } else if (styles === 'stylus') { -%>
+    gulp.watch('src/**/*.styl', ['stylesheets-watch']);
+<% } else { -%>
+    gulp.watch('src/**/*.css', ['stylesheets-watch']);
+<% } -%>
+    gulp.watch('src/**/*.js', ['javascripts-watch']);
 });
 
 
